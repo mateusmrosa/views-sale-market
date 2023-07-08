@@ -92,13 +92,22 @@ const TelaVendas = () => {
                     min="1"
                 />
             </div>
-            <button
-                className="btn btn-success mb-3"
-                onClick={adicionarVenda}
-                disabled={!produtoSelecionado}
-            >+
-            </button>
-            
+            <div className='row'>
+                <div className='col-md-3'>
+                    <button
+                        className="btn btn-success mb-3"
+                        onClick={adicionarVenda}
+                        disabled={!produtoSelecionado}
+                    >+
+                    </button>
+                </div>
+                <div className='col-md-3'>
+                    <h6>Total da Compra: {formatarMoeda(totalCompra)}</h6> <h6>Total Impostos: {formatarMoeda(totalImpostos)}</h6>
+                    
+                </div>
+            </div>
+
+
             {vendas.length === 0 && <p>Nenhum produto no carrinho.</p>}
             {vendas.map((venda, index) => (
                 <div key={venda.id} className="card mb-3">
@@ -117,8 +126,7 @@ const TelaVendas = () => {
                     </div>
                 </div>
             ))}
-            <h3>Total da Compra: {formatarMoeda(totalCompra)}</h3>
-            <h3>Total Impostos: {formatarMoeda(totalImpostos)}</h3>
+
         </div>
     );
 };
