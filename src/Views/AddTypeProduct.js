@@ -24,7 +24,7 @@ const AddTypeProduct = () => {
       console.log('Product type created successfully:', response.data);
 
       setTypeName('');
-      setShowSuccessMessage(true); // Exibe a mensagem de sucesso
+      setShowSuccessMessage(true); 
 
       setTimeout(() => {
         setShowSuccessMessage(false);

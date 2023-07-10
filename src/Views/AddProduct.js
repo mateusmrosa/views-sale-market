@@ -57,7 +57,6 @@ const AddProducts = () => {
       setSelectedProductType('');
       setShowSuccessMessage(true);
 
-      // Hide success message after 3 seconds
       setTimeout(() => {
         setShowSuccessMessage(false);
       }, 3000);
