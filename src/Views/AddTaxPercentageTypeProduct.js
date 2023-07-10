@@ -56,8 +56,9 @@ const AddTaxPercentageTypeProduct = () => {
       setTaxPercentage('');
 
       setTimeout(() => {
-        setShowSuccessMessage(false);
+        setShowSuccessMessage(true);
       }, 3000);
+
     } catch (error) {
       console.error('Error creating tax:', error);
     }

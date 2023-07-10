@@ -24,8 +24,6 @@ const Sale = () => {
         }
     };
 
-
-
     const adicionarVenda = () => {
         if (produtoSelecionado) {
             const venda = {
@@ -33,23 +31,22 @@ const Sale = () => {
                 nome: produtoSelecionado.product_name,
                 valor: produtoSelecionado.product_price,
                 quantidade: produtoSelecionado.quantidade,
-                imposto: produtoSelecionado.prod_type_percentage
+                imposto: produtoSelecionado.prod_type_percentage,
+                valorTotal: produtoSelecionado.product_price * produtoSelecionado.quantidade,
             };
-            const valorTotal = venda.valor * venda.quantidade;
             const impostoTotal = venda.imposto * venda.quantidade;
             setVendas([...vendas, venda]);
-            setTotalCompra(totalCompra + valorTotal);
+            setTotalCompra(totalCompra + venda.valorTotal);
             setTotalImpostos(totalImpostos + impostoTotal);
             setProdutoSelecionado(null);
         }
     };
 
     const removerVenda = (venda) => {
-        const valorTotal = venda.valor * venda.quantidade;
         const impostoTotal = venda.imposto * venda.quantidade;
         const vendasAtualizadas = vendas.filter((v) => v !== venda);
         setVendas(vendasAtualizadas);
-        setTotalCompra(totalCompra - valorTotal);
+        setTotalCompra(totalCompra - venda.valorTotal);
         setTotalImpostos(totalImpostos - impostoTotal);
     };
 
@@ -66,6 +63,21 @@ const Sale = () => {
         setProdutoSelecionado({ ...produtoSelecionado, quantidade });
     };
 
+    const finalizarVenda = async () => {
+        try {
+            console.log(vendas);
+            console.log(totalCompra);
+            const API_URL = 'http://localhost:8000';
+            const response = await axios.post(API_URL + '/sales', { produtos: vendas });
+            console.log('Venda finalizada:', response.data);
+            // Reset the state after successful sale
+            setVendas([]);
+            setTotalCompra(0);
+            setTotalImpostos(0);
+        } catch (error) {
+            console.error('Erro ao finalizar a venda:', error);
+        }
+    };
     return (
         <div className="container">
             <h1>Vendas</h1>
@@ -107,6 +119,9 @@ const Sale = () => {
                 </div>
                 <div className='col-md-3'>
                     <h6>Total Compra: {formatarMoeda(totalCompra)}</h6> <h6>Total Impostos: {formatarMoeda(totalImpostos)}</h6>
+                </div>
+                <div className='col-6'>
+                    <button className="btn btn-success mb-3" onClick={finalizarVenda}>Finalizar Venda</button>
                 </div>
             </div>
 
