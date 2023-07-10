@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const TelaVendas = () => {
+const Sale = () => {
     const [produtos, setProdutos] = useState([]);
     const [produtoSelecionado, setProdutoSelecionado] = useState(null);
     const [vendas, setVendas] = useState([]);
@@ -24,14 +24,16 @@ const TelaVendas = () => {
         }
     };
 
+
+
     const adicionarVenda = () => {
         if (produtoSelecionado) {
             const venda = {
-                id: produtoSelecionado.id,
-                nome: produtoSelecionado.name,
-                valor: produtoSelecionado.price,
+                id: produtoSelecionado.product_id,
+                nome: produtoSelecionado.product_name,
+                valor: produtoSelecionado.product_price,
                 quantidade: produtoSelecionado.quantidade,
-                imposto: produtoSelecionado.imposto
+                imposto: produtoSelecionado.prod_type_percentage
             };
             const valorTotal = venda.valor * venda.quantidade;
             const impostoTotal = venda.imposto * venda.quantidade;
@@ -77,7 +79,8 @@ const TelaVendas = () => {
                             onClick={() => handleProdutoSelecionado(produto)}
                             style={{ cursor: 'pointer' }}
                         >
-                            {produto.name} - R${produto.price}
+                            {produto.product_name} - R${formatarMoeda(produto.product_price)} - <small><b>({produto.prod_type_name})
+                                Imp: %{produto.prod_type_percentage} </b></small>
                         </li>
                     ))}
                 </ul>
@@ -90,10 +93,11 @@ const TelaVendas = () => {
                     value={produtoSelecionado ? produtoSelecionado.quantidade : ''}
                     onChange={handleQuantidadeChange}
                     min="1"
+                    disabled={!produtoSelecionado}
                 />
             </div>
             <div className='row'>
-                <div className='col-md-3'>
+                <div className='col-3'>
                     <button
                         className="btn btn-success mb-3"
                         onClick={adicionarVenda}
@@ -102,21 +106,27 @@ const TelaVendas = () => {
                     </button>
                 </div>
                 <div className='col-md-3'>
-                    <h6>Total da Compra: {formatarMoeda(totalCompra)}</h6> <h6>Total Impostos: {formatarMoeda(totalImpostos)}</h6>
-                    
+                    <h6>Total Compra: {formatarMoeda(totalCompra)}</h6> <h6>Total Impostos: {formatarMoeda(totalImpostos)}</h6>
                 </div>
             </div>
 
 
-            {vendas.length === 0 && <p>Nenhum produto no carrinho.</p>}
+            {
+                vendas.length === 0 &&
+                <div className='col-12'>
+                    <div className='alert alert-info mb-3'>
+                        Nenhum produto no carrinho.
+                    </div>
+                </div>
+            }
             {vendas.map((venda, index) => (
                 <div key={venda.id} className="card mb-3">
                     <div className="card-body">
                         <h5 className="card-title">{venda.nome}</h5>
-                        <p>Value: R${formatarMoeda(venda.valor)}</p>
+                        <p>Valor: R${venda.valor}</p>
                         <p>Quantidade {venda.quantidade}</p>
                         <p>Total: {formatarMoeda((venda.valor * venda.quantidade))}</p>
-                        <p>Imposto: {(venda.imposto * venda.quantidade)}</p>
+                        <p>Imposto: {formatarMoeda((venda.imposto * venda.quantidade))}</p>
                         <button
                             className="btn btn-outline-danger btn-sm"
                             onClick={() => removerVenda(venda)}
@@ -131,4 +141,4 @@ const TelaVendas = () => {
     );
 };
 
-export default TelaVendas;
+export default Sale;
