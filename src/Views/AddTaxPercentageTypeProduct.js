@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PageContent from './PageContent ';
 
 const AddTaxPercentageTypeProduct = () => {
   const [taxName, setTaxName] = useState('');
@@ -65,43 +66,45 @@ const AddTaxPercentageTypeProduct = () => {
   };
 
   return (
-    <div className="container">
-      <h1>Cadastro de imposto de tipos de produtos</h1>
-      {showSuccessMessage && (
-        <div className="alert alert-success mb-3">Imposto cadastrado com sucesso!</div>
-      )}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className='mb-1'>Tipos de Produtos:</label>
-          <select
-            className="form-control mb-3"
-            value={taxName}
-            onChange={handleTaxNameChange}
-            required
-          >
-            <option value="">Selecione</option>
-            {productTypes.map((type) => (
-              <option key={type.id} value={type.name}>
-                {type.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label className='mb-1'>Imposto:</label>
-          <input
-            type="number"
-            step="0.01"
-            min={0.01}
-            className="form-control mb-3"
-            value={taxPercentage}
-            onChange={handleTaxPercentageChange}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">Salvar</button>
-      </form>
-    </div>
+    <PageContent>
+      <div className="container">
+        <h1>Cadastro de imposto de tipos de produtos</h1>
+        {showSuccessMessage && (
+          <div className="alert alert-success mb-3">Imposto cadastrado com sucesso!</div>
+        )}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className='mb-1'>Tipos de Produtos:</label>
+            <select
+              className="form-control mb-3"
+              value={taxName}
+              onChange={handleTaxNameChange}
+              required
+            >
+              <option value="">Selecione</option>
+              {productTypes.map((type) => (
+                <option key={type.id} value={type.name}>
+                  {type.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label className='mb-1'>Imposto:</label>
+            <input
+              type="number"
+              step="0.01"
+              min={0.01}
+              className="form-control mb-3"
+              value={taxPercentage}
+              onChange={handleTaxPercentageChange}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">Salvar</button>
+        </form>
+      </div>
+    </PageContent>
   );
 };
 

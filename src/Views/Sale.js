@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PageContent from './PageContent ';
+
 
 const Sale = () => {
     const [products, setProducts] = useState([]);
@@ -84,83 +86,85 @@ const Sale = () => {
         }
     };
     return (
-        <div className="container">
-            <h1>Vendas</h1>
-            {showSuccessMessage && (
-                <div className="alert alert-success mb-3">Produto cadastrado com sucesso!</div>
-            )}
-            <div className="form-group mb-3">
-                <label>Produtos:</label>
-                <ul className="list-group">
-                    {products.map((product) => (
-                        <li
-                            key={product.product_id}
-                            className={`list-group-item ${product === productSelected ? 'active' : ''}`}
-                            onClick={() => handleProdutoSelecionado(product)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            {product.product_name} - R${formatCurrency(product.product_price)} - <small><b>({product.prod_type_name})
-                                Imp: %{product.prod_type_percentage} </b></small>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="form-group mb-3">
-                <label>Quantidade:</label>
-                <input
-                    type="number"
-                    className="form-control"
-                    value={productSelected ? productSelected.quantity : ''}
-                    onChange={handleQuantidadeChange}
-                    min="1"
-                    disabled={!productSelected}
-                />
-            </div>
-            <div className='row'>
-                <div className='col-3'>
-                    <button
-                        className="btn btn-success mb-3"
-                        onClick={addSale}
+        <PageContent>
+            <div className="container">
+                <h1>Vendas</h1>
+                {showSuccessMessage && (
+                    <div className="alert alert-success mb-3">Produto cadastrado com sucesso!</div>
+                )}
+                <div className="form-group mb-3">
+                    <label>Produtos:</label>
+                    <ul className="list-group">
+                        {products.map((product) => (
+                            <li
+                                key={product.product_id}
+                                className={`list-group-item ${product === productSelected ? 'active' : ''}`}
+                                onClick={() => handleProdutoSelecionado(product)}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                {product.product_name} - R${formatCurrency(product.product_price)} - <small><b>({product.prod_type_name})
+                                    Imp: %{product.prod_type_percentage} </b></small>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="form-group mb-3">
+                    <label>Quantidade:</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={productSelected ? productSelected.quantity : ''}
+                        onChange={handleQuantidadeChange}
+                        min="1"
                         disabled={!productSelected}
-                    >+
-                    </button>
+                    />
                 </div>
-                <div className='col-md-3'>
-                    <h6>Total Compra: {formatCurrency(totalBuy)}</h6> <h6>Total Impostos: {formatCurrency(totalTaxes)}</h6>
-                </div>
-                <div className='col-6'>
-                    <button className="btn btn-success mb-3" onClick={finalizeSale}>Finalizar Venda</button>
-                </div>
-            </div>
-
-
-            {
-                sales.length === 0 &&
-                <div className='col-12'>
-                    <div className='alert alert-info mb-3'>
-                        Nenhum produto no carrinho.
-                    </div>
-                </div>
-            }
-            {sales.map((sale, index) => (
-                <div key={sale.id} className="card mb-3">
-                    <div className="card-body">
-                        <h5 className="card-title">{sale.name}</h5>
-                        <p>Valor: R${sale.value}</p>
-                        <p>Quantidade {sale.quantity}</p>
-                        <p>Total: {formatCurrency((sale.value * sale.quantity))}</p>
-                        <p>Imposto: {formatCurrency((sale.tax * sale.quantity))}</p>
+                <div className='row'>
+                    <div className='col-3'>
                         <button
-                            className="btn btn-outline-danger btn-sm"
-                            onClick={() => removeSale(sale)}
-                        >
-                            Remove
+                            className="btn btn-success mb-3"
+                            onClick={addSale}
+                            disabled={!productSelected}
+                        >+
                         </button>
                     </div>
+                    <div className='col-md-3'>
+                        <h6>Total Compra: {formatCurrency(totalBuy)}</h6> <h6>Total Impostos: {formatCurrency(totalTaxes)}</h6>
+                    </div>
+                    <div className='col-6'>
+                        <button className="btn btn-success mb-3" onClick={finalizeSale}>Finalizar Venda</button>
+                    </div>
                 </div>
-            ))}
 
-        </div>
+
+                {
+                    sales.length === 0 &&
+                    <div className='col-12'>
+                        <div className='alert alert-info mb-3'>
+                            Nenhum produto no carrinho.
+                        </div>
+                    </div>
+                }
+                {sales.map((sale, index) => (
+                    <div key={sale.id} className="card mb-3">
+                        <div className="card-body">
+                            <h5 className="card-title">{sale.name}</h5>
+                            <p>Valor: R${sale.value}</p>
+                            <p>Quantidade {sale.quantity}</p>
+                            <p>Total: {formatCurrency((sale.value * sale.quantity))}</p>
+                            <p>Imposto: {formatCurrency((sale.tax * sale.quantity))}</p>
+                            <button
+                                className="btn btn-outline-danger btn-sm"
+                                onClick={() => removeSale(sale)}
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                ))}
+
+            </div>
+        </PageContent>
     );
 };
 

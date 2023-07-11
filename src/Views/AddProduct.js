@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PageContent from './PageContent ';
 
 const AddProducts = () => {
   const [productName, setProductName] = useState('');
@@ -12,7 +13,7 @@ const AddProducts = () => {
     loadProductTypes();
   }, []);
 
-   const loadProductTypes = async () => {
+  const loadProductTypes = async () => {
     try {
       const API_URL = 'http://localhost:8000';
       const response = await axios.get(API_URL + '/products_type');
@@ -66,53 +67,55 @@ const AddProducts = () => {
   };
 
   return (
-    <div className="container">
-      <h1>Cadastro de Produtos</h1>
-      {showSuccessMessage && (
-        <div className="alert alert-success mb-3">Produto cadastrado com sucesso!</div>
-      )}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className='mb-1'>Produto:</label>
-          <input
-            type="text"
-            className="form-control mb-3"
-            value={productName}
-            onChange={handleProductNameChange}
-            required
-          />
-        </div>
-        <div className="form-group mb-3">
-          <label className='mb-1'>Valor:</label>
-          <input
-            type="text"
-            className="form-control"
-            value={productValue}
-            onChange={handleProductValueChange}
-            required
-          />
-        </div>
-        <div className="form-group mb-3">
-          <label className='mb-1'>Tipo do Produto:</label>
-          <select
-            className="form-control"
-            value={selectedProductType}
-            onChange={handleProductTypeChange}
-            required
-          >
-            <option value="">Selecione</option>
-            {productTypes.map((type) => (
-              <option key={type.id} value={type.id}>
-                {type.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Salvar
-        </button>
-      </form>
-    </div>
+    <PageContent>
+      <div className="container">
+        <h1>Cadastro de Produtos</h1>
+        {showSuccessMessage && (
+          <div className="alert alert-success mb-3">Produto cadastrado com sucesso!</div>
+        )}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className='mb-1'>Produto:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={productName}
+              onChange={handleProductNameChange}
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label className='mb-1'>Valor:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={productValue}
+              onChange={handleProductValueChange}
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label className='mb-1'>Tipo do Produto:</label>
+            <select
+              className="form-control"
+              value={selectedProductType}
+              onChange={handleProductTypeChange}
+              required
+            >
+              <option value="">Selecione</option>
+              {productTypes.map((type) => (
+                <option key={type.id} value={type.id}>
+                  {type.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Salvar
+          </button>
+        </form>
+      </div>
+    </PageContent>
   );
 };
 
