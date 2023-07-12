@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PageContent from './PageContent ';
+import { isAuthenticated } from '../ProtectedRoute/ProtectedRoute';
 
 const AddTaxPercentageTypeProduct = () => {
   const [taxName, setTaxName] = useState('');
@@ -10,6 +11,7 @@ const AddTaxPercentageTypeProduct = () => {
 
   useEffect(() => {
     loadProductTypes();
+    isAuthenticated();
   }, []);
 
   const loadProductTypes = async () => {

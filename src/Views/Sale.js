@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PageContent from './PageContent ';
-
+import { isAuthenticated } from '../ProtectedRoute/ProtectedRoute';
 
 const Sale = () => {
     const [products, setProducts] = useState([]);
@@ -13,6 +13,7 @@ const Sale = () => {
 
     useEffect(() => {
         loadProducts();
+        isAuthenticated();
     }, []);
 
     const loadProducts = async () => {

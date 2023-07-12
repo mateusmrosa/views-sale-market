@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PageContent from './PageContent ';
+import { isAuthenticated } from '../ProtectedRoute/ProtectedRoute';
 
 
 const AddTypeProduct = () => {
   const [typeName, setTypeName] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  useEffect(() => {
+    isAuthenticated();
+  }, []);
 
   const handleTypeNameChange = (event) => {
     setTypeName(event.target.value);
