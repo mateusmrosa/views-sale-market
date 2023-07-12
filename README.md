@@ -7,5 +7,8 @@ Inicializar o projeto:
  - navegar até a pasta "views-sale-market"
  - rodar npm install para instalar as dependencias
  - rodar comando: npm start
+ - As credenciais para logar no sistema são:
+   - email: mateus@gmail.com
+   - password: 123
 
 
